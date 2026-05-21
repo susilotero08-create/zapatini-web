@@ -531,3 +531,71 @@ footer {
         display: none;
     }
 }
+
+/* Preloader & Connection Error styles */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #FFFDFD 0%, #FFDAB9 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.preloader-content {
+    text-align: center;
+}
+
+.preloader-logo {
+    height: 120px;
+    width: auto;
+    margin-bottom: 1.5rem;
+    animation: spin 2s linear infinite;
+    mix-blend-mode: multiply;
+}
+
+#preloader-text {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.preloader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.05);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Offline Banner */
+.offline-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #FF6B6B;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+    z-index: 2000;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.offline-banner.show {
+    transform: translateX(-50%) translateY(0);
+}

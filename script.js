@@ -48,4 +48,72 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2000);
         });
     });
+
+    // Preloader handler
+    const preloader = document.getElementById('preloader');
+    const preloaderText = document.getElementById('preloader-text');
+
+    // Function to hide preloader smoothly
+    function hidePreloader() {
+        if (preloader && !preloader.classList.contains('fade-out')) {
+            preloader.classList.add('fade-out');
+        }
+    }
+
+    // Function to show preloader (used for offline or loading state)
+    function showPreloader(message) {
+        if (preloader) {
+            if (message && preloaderText) {
+                preloaderText.innerText = message;
+            }
+            preloader.classList.remove('fade-out');
+        }
+    }
+
+    // Hide preloader when the window is fully loaded
+    window.addEventListener('load', () => {
+        // Add a slight delay for aesthetic feel
+        setTimeout(hidePreloader, 800);
+    });
+
+    // Backup: hide preloader after 5 seconds max if window load event doesn't fire
+    setTimeout(hidePreloader, 5000);
+
+    // Online / Offline Detection
+    function updateConnectionStatus() {
+        if (navigator.onLine) {
+            // Remove offline preloader if it was shown due to offline status
+            if (preloaderText && preloaderText.innerText.includes('conexión')) {
+                preloaderText.innerText = '¡Conexión recuperada! Cargando...';
+                setTimeout(hidePreloader, 1000);
+            }
+            // Remove offline banner if it exists
+            const banner = document.getElementById('offline-banner');
+            if (banner) {
+                banner.classList.remove('show');
+            }
+        } else {
+            // Show rotating logo preloader when offline
+            showPreloader('Sin conexión a Internet. Intentando reconectar...');
+            
+            // Or show an offline banner at the bottom
+            let banner = document.getElementById('offline-banner');
+            if (!banner) {
+                banner = document.createElement('div');
+                banner.id = 'offline-banner';
+                banner.className = 'offline-banner';
+                banner.innerHTML = '⚠️ Sin conexión a Internet';
+                document.body.appendChild(banner);
+            }
+            setTimeout(() => banner.classList.add('show'), 100);
+        }
+    }
+
+    window.addEventListener('online', updateConnectionStatus);
+    window.addEventListener('offline', updateConnectionStatus);
+
+    // Check initial connection status
+    if (!navigator.onLine) {
+        updateConnectionStatus();
+    }
 });
