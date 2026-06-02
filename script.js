@@ -30,12 +30,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Simple interaction for buy buttons
+    // Interaction for buy buttons (Redirect to WhatsApp with product info)
     const buyButtons = document.querySelectorAll('.btn-buy');
     buyButtons.forEach(button => {
         button.addEventListener('click', function() {
+            const card = this.closest('.product-card');
+            if (card) {
+                const modelName = card.querySelector('h3').innerText;
+                const imgElement = card.querySelector('.product-img');
+                const imgSrc = imgElement ? imgElement.getAttribute('src') : '';
+                
+                // Base public image URL, falling back to production URL if testing locally
+                let imgUrl = '';
+                if (imgSrc) {
+                    if (window.location.hostname === 'localhost' || window.location.protocol === 'file:') {
+                        imgUrl = 'https://zapatini-web.vercel.app/' + imgSrc;
+                    } else {
+                        imgUrl = window.location.origin + '/' + imgSrc;
+                    }
+                }
+                
+                const phoneNumber = '573052048287';
+                const messageText = `Hola!!❤️  Quisiera más información sobre este Teni: ${modelName}\n${imgUrl}`;
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(messageText)}`;
+                
+                // Open immediately to prevent browser popup blockers
+                window.open(whatsappUrl, '_blank');
+            }
+
             const originalText = this.innerText;
-            this.innerText = '¡Añadido!';
+            this.innerText = 'Abriendo... 💬';
             this.style.background = '#98FB98'; // Mint color
             this.style.borderColor = '#98FB98';
             this.style.color = '#2D3436';
