@@ -226,6 +226,38 @@
         </div>
     </footer>
 
+    <!-- Floating Cart Button -->
+    <div id="cart-float-btn" class="cart-float-btn">
+        <span class="cart-icon">🛒</span>
+        <span id="cart-count-badge" class="cart-count-badge">0</span>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3>Tu Carrito 🛍️</h3>
+            <button id="close-cart-btn" class="close-cart-btn">&times;</button>
+        </div>
+        <div id="cart-drawer-items" class="cart-drawer-items">
+            <!-- Empty state -->
+            <div class="cart-empty-state">
+                <span class="empty-icon">👟</span>
+                <p>Tu carrito está vacío.</p>
+                <a href="#coleccion" id="continue-shopping-btn" class="btn-continue-shopping">Ver Catálogo</a>
+            </div>
+        </div>
+        <div id="cart-drawer-footer" class="cart-drawer-footer">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span id="cart-total-price">$0 COP</span>
+            </div>
+            <button id="checkout-whatsapp-btn" class="btn-checkout">Pedir por WhatsApp 💬</button>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+
     <script src="script.js"></script>
 </body>
 </html>

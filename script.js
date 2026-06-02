@@ -30,7 +30,208 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Interaction for buy buttons (Redirect to WhatsApp with product info)
+    // ==========================================
+    // SHOPPING CART SYSTEM LOGIC
+    // ==========================================
+
+    let cart = JSON.parse(localStorage.getItem('zapatini_cart')) || [];
+
+    const cartFloatBtn = document.getElementById('cart-float-btn');
+    const cartCountBadge = document.getElementById('cart-count-badge');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartOverlay = document.getElementById('cart-overlay');
+    const closeCartBtn = document.getElementById('close-cart-btn');
+    const continueShoppingBtn = document.getElementById('continue-shopping-btn');
+    const cartDrawerItems = document.getElementById('cart-drawer-items');
+    const cartTotalPrice = document.getElementById('cart-total-price');
+    const checkoutWhatsappBtn = document.getElementById('checkout-whatsapp-btn');
+
+    // Open/Close Cart Drawer
+    function toggleCart(isOpen) {
+        if (isOpen) {
+            cartDrawer.classList.add('open');
+            cartOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent main page scrolling
+        } else {
+            cartDrawer.classList.remove('open');
+            cartOverlay.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+    }
+
+    if (cartFloatBtn) cartFloatBtn.addEventListener('click', () => toggleCart(true));
+    if (closeCartBtn) closeCartBtn.addEventListener('click', () => toggleCart(false));
+    if (cartOverlay) cartOverlay.addEventListener('click', () => toggleCart(false));
+    if (continueShoppingBtn) continueShoppingBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleCart(false);
+        const target = document.querySelector('#coleccion');
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+
+    // Save cart to local storage and update UI
+    function saveCart() {
+        localStorage.setItem('zapatini_cart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    // Add item to cart
+    function addToCart(name, price, imgSrc) {
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                name: name,
+                price: price,
+                imgSrc: imgSrc,
+                quantity: 1
+            });
+        }
+        saveCart();
+        
+        // Trigger bounce animation on the float button
+        if (cartFloatBtn) {
+            cartFloatBtn.classList.remove('cart-pulse');
+            // Trigger reflow to restart animation
+            void cartFloatBtn.offsetWidth;
+            cartFloatBtn.classList.add('cart-pulse');
+        }
+    }
+
+    // Update Item Quantity
+    window.updateCartQty = function(name, change) {
+        const item = cart.find(item => item.name === name);
+        if (item) {
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                removeFromCart(name);
+            } else {
+                saveCart();
+            }
+        }
+    };
+
+    // Remove Item from Cart
+    window.removeFromCart = function(name) {
+        cart = cart.filter(item => item.name !== name);
+        saveCart();
+    };
+
+    // Render Cart HTML
+    function renderCart() {
+        // Calculate items count and total
+        let totalCount = 0;
+        let totalPrice = 0;
+        
+        // Clear items display (keeping empty state template ready)
+        cartDrawerItems.innerHTML = '';
+        
+        if (cart.length === 0) {
+            // Render empty state
+            cartDrawerItems.innerHTML = `
+                <div class="cart-empty-state">
+                    <span class="empty-icon">👟</span>
+                    <p>Tu carrito está vacío.</p>
+                    <a href="#coleccion" id="continue-shopping-btn" class="btn-continue-shopping">Ver Catálogo</a>
+                </div>
+            `;
+            // Re-bind the click event for continue shopping button
+            const newContinueBtn = document.getElementById('continue-shopping-btn');
+            if (newContinueBtn) {
+                newContinueBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    toggleCart(false);
+                    const target = document.querySelector('#coleccion');
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        } else {
+            cart.forEach(item => {
+                totalCount += item.quantity;
+                totalPrice += item.price * item.quantity;
+                
+                // Render item node
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                itemEl.innerHTML = `
+                    <div class="cart-item-img-container">
+                        <img src="${item.imgSrc}" alt="${item.name}" class="cart-item-img">
+                    </div>
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <div class="cart-item-price">$${(item.price).toLocaleString('es-CO')} COP</div>
+                        <div class="cart-item-controls">
+                            <button class="cart-qty-btn" onclick="updateCartQty('${item.name}', -1)">-</button>
+                            <span class="cart-qty-val">${item.quantity}</span>
+                            <button class="cart-qty-btn" onclick="updateCartQty('${item.name}', 1)">+</button>
+                        </div>
+                    </div>
+                    <button class="cart-item-remove-btn" onclick="removeFromCart('${item.name}')">🗑️</button>
+                `;
+                cartDrawerItems.appendChild(itemEl);
+            });
+        }
+        
+        // Update total values and count badges
+        if (cartCountBadge) {
+            cartCountBadge.innerText = totalCount;
+            // Hide badge if empty
+            cartCountBadge.style.transform = totalCount > 0 ? 'scale(1)' : 'scale(0)';
+        }
+        
+        if (cartTotalPrice) {
+            cartTotalPrice.innerText = `$${totalPrice.toLocaleString('es-CO')} COP`;
+        }
+    }
+
+    // Checkout to WhatsApp
+    if (checkoutWhatsappBtn) {
+        checkoutWhatsappBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío. Agrega algunos tenis antes de pedir.');
+                return;
+            }
+            
+            const phoneNumber = '573052048287';
+            let messageText = `Hola!!❤️  Quisiera más información sobre estos Tenis:\n\n`;
+            
+            let totalPrice = 0;
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                totalPrice += subtotal;
+                
+                // Add public image URL for visual previews in WhatsApp
+                let imgUrl = '';
+                if (item.imgSrc) {
+                    if (window.location.hostname === 'localhost' || window.location.protocol === 'file:') {
+                        imgUrl = 'https://zapatini-web.vercel.app/' + item.imgSrc;
+                    } else {
+                        imgUrl = window.location.origin + '/' + item.imgSrc;
+                    }
+                }
+                
+                messageText += `👟 *${item.name}*\n   Cantidad: ${item.quantity}\n   Precio: $${(item.price).toLocaleString('es-CO')} COP c/u\n   Foto: ${imgUrl}\n\n`;
+            });
+            
+            messageText += `*Total a pagar: $${totalPrice.toLocaleString('es-CO')} COP*`;
+            
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(messageText)}`;
+            window.open(whatsappUrl, '_blank');
+        });
+    }
+
+    // Initialize/Bind buy buttons in Catalog
     const buyButtons = document.querySelectorAll('.btn-buy');
     buyButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -40,26 +241,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const imgElement = card.querySelector('.product-img');
                 const imgSrc = imgElement ? imgElement.getAttribute('src') : '';
                 
-                // Base public image URL, falling back to production URL if testing locally
-                let imgUrl = '';
-                if (imgSrc) {
-                    if (window.location.hostname === 'localhost' || window.location.protocol === 'file:') {
-                        imgUrl = 'https://zapatini-web.vercel.app/' + imgSrc;
-                    } else {
-                        imgUrl = window.location.origin + '/' + imgSrc;
-                    }
-                }
+                // Extract clean price number (e.g. "$60.000 COP" -> 60000)
+                const priceText = card.querySelector('.price').innerText;
+                const priceVal = parseInt(priceText.replace(/[^0-9]/g, ''), 10) || 60000;
                 
-                const phoneNumber = '573052048287';
-                const messageText = `Hola!!❤️  Quisiera más información sobre este Teni: ${modelName}\n${imgUrl}`;
-                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(messageText)}`;
-                
-                // Open immediately to prevent browser popup blockers
-                window.open(whatsappUrl, '_blank');
+                addToCart(modelName, priceVal, imgSrc);
             }
 
             const originalText = this.innerText;
-            this.innerText = 'Abriendo... 💬';
+            this.innerText = '¡Añadido! 🛒';
             this.style.background = '#98FB98'; // Mint color
             this.style.borderColor = '#98FB98';
             this.style.color = '#2D3436';
@@ -69,9 +259,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.style.background = '';
                 this.style.borderColor = '';
                 this.style.color = '';
-            }, 2000);
+            }, 1200);
         });
     });
+
+    // Render cart on page load
+    renderCart();
 
     // Preloader handler
     const preloader = document.getElementById('preloader');
