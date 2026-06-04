@@ -372,4 +372,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!navigator.onLine) {
         updateConnectionStatus();
     }
+
+    // Toggle expandable cards in Benefits section
+    window.toggleFeatureCard = function(cardEl) {
+        cardEl.classList.toggle('active');
+    };
 });

@@ -7,7 +7,7 @@
     <meta name="description" content="Descubre nuestra colección de tenis para niños. Diseños elegantes, tiernos y súper divertidos para los pequeños de la casa.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&family=Lilita+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -78,55 +78,77 @@
 
         <section id="beneficios" class="features">
             <h2>Formas de Pago y Beneficios Exclusivos 💸</h2>
+            <p class="features-subtitle">Haz clic en cada título para ver los detalles 🌸</p>
             <div class="features-grid">
                 <!-- Card 1: Domicilio Gratis -->
-                <div class="feature-card">
-                    <div class="feature-icon">🚚</div>
-                    <h3>Domicilio Gratis</h3>
-                    <p class="feature-highlight-text">Por más de 2 tenis</p>
-                    <p>¡Queremos consentirte! Si compras <strong>3 o más pares de tenis</strong> (más de dos unidades), el envío a domicilio es completamente <strong>gratuito</strong>.</p>
-                    <div class="delivery-badge-container">
-                        <span class="delivery-badge">✨ Promoción Activa</span>
+                <div class="feature-card expandable-card" onclick="toggleFeatureCard(this)">
+                    <div class="card-header">
+                        <div class="feature-icon-mini">🚚</div>
+                        <h3 class="surprise-title">Domicilio Gratis</h3>
+                        <span class="toggle-arrow">▼</span>
+                    </div>
+                    <div class="card-content-collapsible">
+                        <div class="card-content-inner">
+                            <p class="feature-highlight-text">Por más de 2 tenis</p>
+                            <p>¡Queremos consentirte! Si compras <strong>3 o más pares de tenis</strong> (más de dos unidades), el envío a domicilio es completamente <strong>gratuito</strong>.</p>
+                            <div class="delivery-badge-container">
+                                <span class="delivery-badge">✨ Promoción Activa</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Card 2: Tarjeta de Fidelización -->
-                <div class="feature-card fidelity-card-wrapper">
-                    <div class="feature-icon">🎁</div>
-                    <h3>Tarjeta de Fidelización</h3>
-                    <p class="feature-highlight-text">50% de Descuento</p>
-                    <p>Al llenar tu tarjeta de fidelización digital con tus compras, obtienes un <strong>50% de descuento</strong> en referencias seleccionadas.</p>
-                    
-                    <!-- Visual stamp card -->
-                    <div class="stamp-card">
-                        <div class="stamp-slot stamped">👟</div>
-                        <div class="stamp-slot stamped">👟</div>
-                        <div class="stamp-slot stamped">👟</div>
-                        <div class="stamp-slot stamped">👟</div>
-                        <div class="stamp-slot stamped">👟</div>
-                        <div class="stamp-slot gift-slot">50%<br>OFF</div>
+                <div class="feature-card expandable-card" onclick="toggleFeatureCard(this)">
+                    <div class="card-header">
+                        <div class="feature-icon-mini">🎁</div>
+                        <h3 class="surprise-title">Tarjeta de Fidelización</h3>
+                        <span class="toggle-arrow">▼</span>
                     </div>
-                    <span class="stamp-card-caption">¡Acumula estrellas en cada compra! ⭐</span>
+                    <div class="card-content-collapsible">
+                        <div class="card-content-inner">
+                            <p class="feature-highlight-text">50% de Descuento</p>
+                            <p>Al llenar tu tarjeta de fidelización digital con tus compras, obtienes un <strong>50% de descuento</strong> en referencias seleccionadas.</p>
+                            
+                            <!-- Visual stamp card -->
+                            <div class="stamp-card">
+                                <div class="stamp-slot stamped">👟</div>
+                                <div class="stamp-slot stamped">👟</div>
+                                <div class="stamp-slot stamped">👟</div>
+                                <div class="stamp-slot stamped">👟</div>
+                                <div class="stamp-slot stamped">👟</div>
+                                <div class="stamp-slot gift-slot">50%<br>OFF</div>
+                            </div>
+                            <span class="stamp-card-caption">¡Acumula estrellas en cada compra! ⭐</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Card 3: Formas de Pago -->
-                <div class="feature-card">
-                    <div class="feature-icon">💳</div>
-                    <h3>Formas de Pago</h3>
-                    <p class="feature-highlight-text">Facilidad y Confianza</p>
-                    <p>Elige el método que más te convenga para realizar tus compras con total seguridad:</p>
-                    <div class="payment-badges-grid">
-                        <div class="pay-badge nequi">
-                            <span class="pay-dot"></span> Nequi
-                        </div>
-                        <div class="pay-badge bancolombia">
-                            <span class="pay-dot"></span> Bancolombia
-                        </div>
-                        <div class="pay-badge efectivo">
-                            <span class="pay-dot"></span> Efectivo
-                        </div>
-                        <div class="pay-badge contraentrega">
-                            <span class="pay-dot"></span> Contra Entrega
+                <div class="feature-card expandable-card" onclick="toggleFeatureCard(this)">
+                    <div class="card-header">
+                        <div class="feature-icon-mini">💳</div>
+                        <h3 class="surprise-title">Formas de Pago</h3>
+                        <span class="toggle-arrow">▼</span>
+                    </div>
+                    <div class="card-content-collapsible">
+                        <div class="card-content-inner">
+                            <p class="feature-highlight-text">Facilidad y Confianza</p>
+                            <p>Elige el método que más te convenga para realizar tus compras con total seguridad:</p>
+                            <div class="payment-badges-grid">
+                                <div class="pay-badge nequi">
+                                    <span class="pay-dot"></span> Nequi
+                                </div>
+                                <div class="pay-badge bancolombia">
+                                    <span class="pay-dot"></span> Bancolombia
+                                </div>
+                                <div class="pay-badge efectivo">
+                                    <span class="pay-dot"></span> Efectivo
+                                </div>
+                                <div class="pay-badge contraentrega">
+                                    <span class="pay-dot"></span> Contra Entrega
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
