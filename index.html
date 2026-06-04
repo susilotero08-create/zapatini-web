@@ -77,22 +77,58 @@
         </section>
 
         <section id="beneficios" class="features">
-            <h2>¿Por qué elegir Zapatini?</h2>
+            <h2>Formas de Pago y Beneficios Exclusivos 💸</h2>
             <div class="features-grid">
+                <!-- Card 1: Domicilio Gratis -->
                 <div class="feature-card">
-                    <div class="feature-icon">👑</div>
-                    <h3>Elegancia Única</h3>
-                    <p>Diseños sofisticados que hacen que tus pequeños luzcan increíbles en cualquier ocasión.</p>
+                    <div class="feature-icon">🚚</div>
+                    <h3>Domicilio Gratis</h3>
+                    <p class="feature-highlight-text">Por más de 2 tenis</p>
+                    <p>¡Queremos consentirte! Si compras <strong>3 o más pares de tenis</strong> (más de dos unidades), el envío a domicilio es completamente <strong>gratuito</strong>.</p>
+                    <div class="delivery-badge-container">
+                        <span class="delivery-badge">✨ Promoción Activa</span>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧸</div>
-                    <h3>Súper Tiernos</h3>
-                    <p>Detalles encantadores que capturan la dulzura de la infancia en cada paso.</p>
+
+                <!-- Card 2: Tarjeta de Fidelización -->
+                <div class="feature-card fidelity-card-wrapper">
+                    <div class="feature-icon">🎁</div>
+                    <h3>Tarjeta de Fidelización</h3>
+                    <p class="feature-highlight-text">50% de Descuento</p>
+                    <p>Al llenar tu tarjeta de fidelización digital con tus compras, obtienes un <strong>50% de descuento</strong> en referencias seleccionadas.</p>
+                    
+                    <!-- Visual stamp card -->
+                    <div class="stamp-card">
+                        <div class="stamp-slot stamped">👟</div>
+                        <div class="stamp-slot stamped">👟</div>
+                        <div class="stamp-slot stamped">👟</div>
+                        <div class="stamp-slot stamped">👟</div>
+                        <div class="stamp-slot stamped">👟</div>
+                        <div class="stamp-slot gift-slot">50%<br>OFF</div>
+                    </div>
+                    <span class="stamp-card-caption">¡Acumula estrellas en cada compra! ⭐</span>
                 </div>
+
+                <!-- Card 3: Formas de Pago -->
                 <div class="feature-card">
-                    <div class="feature-icon">🎢</div>
-                    <h3>Pura Diversión</h3>
-                    <p>Colores vivos y máxima comodidad para que nunca paren de jugar y explorar.</p>
+                    <div class="feature-icon">💳</div>
+                    <h3>Formas de Pago</h3>
+                    <p class="feature-highlight-text">Facilidad y Confianza</p>
+                    <p>Elige el método que más te convenga para realizar tus compras con total seguridad:</p>
+                    <div class="payment-badges-grid">
+                        <div class="pay-badge nequi">
+                            <span class="pay-dot"></span> Nequi
+                        </div>
+                        <div class="pay-badge bancolombia">
+                            <span class="pay-dot"></span> Bancolombia
+                        </div>
+                        <div class="pay-badge efectivo">
+                            <span class="pay-dot"></span> Efectivo
+                        </div>
+                        <div class="pay-badge contraentrega">
+                            <span class="pay-dot"></span> Contra Entrega
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -247,6 +283,7 @@
             </div>
         </div>
         <div id="cart-drawer-footer" class="cart-drawer-footer">
+            <div id="cart-shipping-notice" class="cart-shipping-notice"></div>
             <div class="cart-total-row">
                 <span>Total:</span>
                 <span id="cart-total-price">$0 COP</span>

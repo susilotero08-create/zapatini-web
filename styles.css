@@ -334,6 +334,190 @@ a {
     color: var(--text-light);
 }
 
+.feature-highlight-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Delivery badge style */
+.delivery-badge-container {
+    margin-top: 1.5rem;
+}
+.delivery-badge {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background: rgba(152, 251, 152, 0.25);
+    color: #1e824c;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(152, 251, 152, 0.15);
+    animation: pulseBadge 2.5s infinite;
+}
+@keyframes pulseBadge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Fidelity Stamp Card styles */
+.stamp-card {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    max-width: 240px;
+    margin: 1.5rem auto 1rem;
+    padding: 1rem;
+    background: rgba(255, 218, 185, 0.15); /* light peach backdrop */
+    border: 2px dashed var(--primary);
+    border-radius: 16px;
+    position: relative;
+}
+.stamp-slot {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    transition: var(--transition-smooth);
+    user-select: none;
+}
+.stamp-slot.stamped {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, #FFFDFD, var(--secondary));
+    box-shadow: 0 4px 8px rgba(255, 154, 139, 0.2);
+    animation: stampIn 0.5s ease forwards;
+}
+@keyframes stampIn {
+    0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.stamp-slot.gift-slot {
+    border-color: #FF6B6B;
+    background: linear-gradient(135deg, #FF6B6B, #FF85A1);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+    animation: giftGlow 2s infinite alternate;
+}
+@keyframes giftGlow {
+    0% { transform: scale(1); box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3); }
+    100% { transform: scale(1.08); box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5); }
+}
+.stamp-card-caption {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-style: italic;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* Payment Badges styles */
+.payment-badges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+.pay-badge {
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-fast);
+    background: white;
+    border: 1px solid var(--border);
+}
+.pay-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+.pay-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.pay-badge.nequi {
+    color: #4A0072;
+    border-color: #E1BEE7;
+}
+.pay-badge.nequi .pay-dot { background-color: #D500F9; }
+.pay-badge.bancolombia {
+    color: #2D3436;
+    border-color: #FFF9C4;
+}
+.pay-badge.bancolombia .pay-dot { background-color: #FFD600; }
+.pay-badge.efectivo {
+    color: #2E7D32;
+    border-color: #C8E6C9;
+}
+.pay-badge.efectivo .pay-dot { background-color: #4CAF50; }
+.pay-badge.contraentrega {
+    color: #0277BD;
+    border-color: #B3E5FC;
+}
+.pay-badge.contraentrega .pay-dot { background-color: #03A9F4; }
+
+/* Cart Shipping Notice / Progress Bar */
+.cart-shipping-notice {
+    background: #FFFDFD;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+.cart-shipping-notice.free-shipping {
+    background: rgba(152, 251, 152, 0.15);
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(152, 251, 152, 0.2);
+}
+.shipping-notice-text {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.shipping-progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+.shipping-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), #FF85A1);
+    border-radius: 4px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cart-shipping-notice.free-shipping .shipping-progress-bar {
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+
 /* Collection */
 .collection {
     padding: var(--spacing-xl) 5%;

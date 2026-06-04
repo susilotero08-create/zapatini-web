@@ -193,7 +193,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cartTotalPrice) {
             cartTotalPrice.innerText = `$${totalPrice.toLocaleString('es-CO')} COP`;
         }
+
+        // Dynamic Shipping Notice Calculation
+        const cartShippingNotice = document.getElementById('cart-shipping-notice');
+        if (cartShippingNotice) {
+            if (totalCount === 0) {
+                cartShippingNotice.style.display = 'none';
+            } else {
+                cartShippingNotice.style.display = 'block';
+                let pct = Math.min((totalCount / 3) * 100, 100);
+                let text = '';
+                if (totalCount === 1) {
+                    text = '¡Agrega 2 pares más para obtener <b>Domicilio Gratis</b>! 🚚';
+                    cartShippingNotice.classList.remove('free-shipping');
+                } else if (totalCount === 2) {
+                    text = '¡Agrega 1 par más para obtener <b>Domicilio Gratis</b>! 🚚';
+                    cartShippingNotice.classList.remove('free-shipping');
+                } else {
+                    text = '🎉 ¡Felicidades! Tienes <b>Domicilio GRATIS</b> 🚚';
+                    cartShippingNotice.classList.add('free-shipping');
+                }
+                
+                cartShippingNotice.innerHTML = `
+                    <div class="shipping-notice-text">${text}</div>
+                    <div class="shipping-progress-bar-container">
+                        <div class="shipping-progress-bar" style="width: ${pct}%"></div>
+                    </div>
+                `;
+            }
+        }
     }
+
 
     // Checkout to WhatsApp
     if (checkoutWhatsappBtn) {
@@ -207,9 +237,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let messageText = `Hola!!❤️  Quisiera más información sobre estos Tenis:\n\n`;
             
             let totalPrice = 0;
+            let totalCount = 0;
             cart.forEach(item => {
                 const subtotal = item.price * item.quantity;
                 totalPrice += subtotal;
+                totalCount += item.quantity;
                 
                 // Add public image URL for visual previews in WhatsApp
                 let imgUrl = '';
@@ -224,7 +256,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 messageText += `👟 *${item.name}*\n   Cantidad: ${item.quantity}\n   Precio: $${(item.price).toLocaleString('es-CO')} COP c/u\n   Foto: ${imgUrl}\n\n`;
             });
             
-            messageText += `*Total a pagar: $${totalPrice.toLocaleString('es-CO')} COP*`;
+            // Add delivery status
+            if (totalCount > 2) {
+                messageText += `🚚 *Envío: GRATIS* (Promoción de más de 2 tenis)\n`;
+            } else {
+                messageText += `🚚 *Envío: Por definir / Contra entrega*\n`;
+            }
+            
+            messageText += `💰 *Total a pagar: $${totalPrice.toLocaleString('es-CO')} COP*`;
             
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(messageText)}`;
             window.open(whatsappUrl, '_blank');
