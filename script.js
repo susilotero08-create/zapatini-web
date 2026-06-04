@@ -375,6 +375,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Toggle expandable cards in Benefits section
     window.toggleFeatureCard = function(cardEl) {
-        cardEl.classList.toggle('active');
+        const isActive = cardEl.classList.contains('active');
+        
+        // Close all other expandable cards
+        document.querySelectorAll('.expandable-card').forEach(card => {
+            card.classList.remove('active');
+        });
+        
+        // Toggle the clicked one
+        if (!isActive) {
+            cardEl.classList.add('active');
+        }
     };
 });
